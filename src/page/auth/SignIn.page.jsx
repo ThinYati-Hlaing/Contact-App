@@ -11,8 +11,14 @@ import { Formik, Form, ErrorMessage } from "formik";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import * as yup from "yup";
+import { Link } from "react-router-dom";
+import { Loader2 } from "lucide-react"
+import { useSignInMutation } from "../../store/service/endpoints/auth.endpoint";
 
 const SignInPage = () => {
+
+    const [fun, data] = useSignInMutation();
+    console.log(data)
     const initialValue = {
         email: "",
         password: "",
@@ -24,8 +30,9 @@ const SignInPage = () => {
         password: yup.string().required("Password Is Required").min(8, "Password should be 8 letter"),
     })
 
-    const handleSubmit = (value) => {
-        console.log(value);
+    const handleSubmit = async (value, action) => {
+        await fun(value);
+        action.reset();
     };
 
     return (
@@ -34,11 +41,13 @@ const SignInPage = () => {
                 <CardHeader className=" flex flex-row justify-between mb-5">
                     <CardTitle>Sign In</CardTitle>
                     <CardDescription className=" text-basic">
-                        I don't have an account
+                        <Link to="sign_up">
+                            I don't have an account
+                        </Link>
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Formik validationSchema={validationSchema} initialValues={initialValue} onSubmit={handleSubmit}>
+                    <Formik validateOnBlur={false} validateOnChange={false} validationSchema={validationSchema} initialValues={initialValue} onSubmit={handleSubmit}>
                         {({ handleBlur, handleChange, values, isSubmitting }) => (
                             <>
                                 <Form className=" flex flex-col gap-4">
@@ -62,7 +71,7 @@ const SignInPage = () => {
                                         id="password"
                                     />
                                     <ErrorMessage className=" text-danger text-sm" component={"p"} name="password" />
-                                    <Button disable={isSubmitting} type="submit" className="w-full bg-basic mt-3">Sign In</Button>
+                                    <Button disabled={isSubmitting} type="submit" className="w-full bg-basic mt-3">Sign In {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}</Button>
                                 </Form>
                             </>
                         )}

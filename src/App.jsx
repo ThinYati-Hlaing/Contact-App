@@ -7,7 +7,7 @@ const App = () => {
     <div className=' w-screen h-screen '>
       <Routes>
         <Route path='/' element={<SignIn />} />
-        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/sign_up' element={<SignUp />} />
       </Routes>
 
     </div>

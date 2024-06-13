@@ -8,8 +8,12 @@ import * as yup from 'yup';
 import { Loader2 } from "lucide-react"
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignUpMutation } from '../../store/service/endpoints/auth.endpoint';
+import { useToast } from "../../components/ui/use-toast"
+import { Description } from '@radix-ui/react-toast';
 
 const SignUpPage = () => {
+    const nav = useNavigate();
+    const { toast } = useToast();
 
     const [fun, data] = useSignUpMutation();
 
@@ -39,6 +43,17 @@ const SignUpPage = () => {
     const handleSubmit = async (value) => {
         await fun(value);
     }
+
+    useEffect(() => {
+        if (data.error) {
+            toast({
+                title: "Auth Error From Server",
+                description: data.error.data.message,
+            })
+        } else if (data.data) {
+            nav("/")
+        }
+    }, [data])
 
     return (
         <div className=' w-3/5 h-full mx-auto flex justify-center items-center'>

@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSignUpMutation } from '../../store/service/endpoints/auth.endpoint';
 import { useToast } from "../../components/ui/use-toast"
 import { Description } from '@radix-ui/react-toast';
+import AuthGuard from '../../components/guard/Auth.Guard';
 
 const SignUpPage = () => {
     const nav = useNavigate();
@@ -56,52 +57,55 @@ const SignUpPage = () => {
     }, [data])
 
     return (
-        <div className=' w-3/5 h-full mx-auto flex justify-center items-center'>
-            <Card className=' lg:basis-2/4 md:basis-2/3'>
-                <CardHeader className='flex flex-row justify-between mb-5'>
-                    <CardTitle>Sign Up</CardTitle>
-                    <CardDescription className='text-basic'>
-                        <Link to="/">
-                            Already have an account
-                        </Link>
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <Formik validationSchema={validationSchema} initialValues={initialValue} onSubmit={handleSubmit} validateOnBlur={false} validateOnChange={false}>
-                        {({ handleBlur, handleChange, values, isSubmitting }) => (
-                            <>
-                                <Form className='flex flex-col gap-3'>
+        <AuthGuard>
+            <div className=' w-3/5 h-full mx-auto flex justify-center items-center'>
+                <Card className=' lg:basis-2/4 md:basis-2/3'>
+                    <CardHeader className='flex flex-row justify-between mb-5'>
+                        <CardTitle>Sign Up</CardTitle>
+                        <CardDescription className='text-basic'>
+                            <Link to="/">
+                                Already have an account
+                            </Link>
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Formik validationSchema={validationSchema} initialValues={initialValue} onSubmit={handleSubmit} validateOnBlur={false} validateOnChange={false}>
+                            {({ handleBlur, handleChange, values, isSubmitting }) => (
+                                <>
+                                    <Form className='flex flex-col gap-3'>
 
-                                    <Label htmlFor="name">Name</Label>
-                                    <Input
-                                        onBlur={handleBlur} value={values.name} onChange={handleChange}
-                                        type="text" name="name" id="name" />
-                                    <ErrorMessage className='text-danger text-sm' component={"p"} name='name' />
+                                        <Label htmlFor="name">Name</Label>
+                                        <Input
+                                            onBlur={handleBlur} value={values.name} onChange={handleChange}
+                                            type="text" name="name" id="name" />
+                                        <ErrorMessage className='text-danger text-sm' component={"p"} name='name' />
 
-                                    <Label htmlFor="email">Email Address</Label>
-                                    <Input
-                                        onBlur={handleBlur} value={values.email} onChange={handleChange}
-                                        type="email" name="email" id="email" placeholder="Email" />
-                                    <ErrorMessage className='text-danger text-sm' component={"p"} name='email' />
-                                    <Label htmlFor="password">Password</Label>
-                                    <Input onBlur={handleBlur} value={values.password} onChange={handleChange} type="password" name="password" id="password" placeholder="password" />
-                                    <ErrorMessage className='text-danger text-sm' component={"p"} name='password' />
+                                        <Label htmlFor="email">Email Address</Label>
+                                        <Input
+                                            onBlur={handleBlur} value={values.email} onChange={handleChange}
+                                            type="email" name="email" id="email" placeholder="Email" />
+                                        <ErrorMessage className='text-danger text-sm' component={"p"} name='email' />
+                                        <Label htmlFor="password">Password</Label>
+                                        <Input onBlur={handleBlur} value={values.password} onChange={handleChange} type="password" name="password" id="password" placeholder="password" />
+                                        <ErrorMessage className='text-danger text-sm' component={"p"} name='password' />
 
-                                    <Label htmlFor="password_confirmation">Password Confirm</Label>
-                                    <Input
-                                        onBlur={handleBlur} value={values.password_confirmation} onChange={handleChange}
-                                        type="password" name="password_confirmation" id="password_confirmation" />
-                                    <ErrorMessage className='text-danger text-sm' component={"p"} name='password_confirmation' />
+                                        <Label htmlFor="password_confirmation">Password Confirm</Label>
+                                        <Input
+                                            onBlur={handleBlur} value={values.password_confirmation} onChange={handleChange}
+                                            type="password" name="password_confirmation" id="password_confirmation" />
+                                        <ErrorMessage className='text-danger text-sm' component={"p"} name='password_confirmation' />
 
 
-                                    <Button disabled={isSubmitting} type='submit' className='w-full bg-basic mt-4'>Sign Up {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}</Button>
-                                </Form>
-                            </>
-                        )}
-                    </Formik>
-                </CardContent>
-            </Card>
-        </div>
+                                        <Button disabled={isSubmitting} type='submit' className='w-full bg-basic mt-4'>Sign Up {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}</Button>
+                                    </Form>
+                                </>
+                            )}
+                        </Formik>
+                    </CardContent>
+                </Card>
+            </div>
+
+        </AuthGuard>
     )
 }
 

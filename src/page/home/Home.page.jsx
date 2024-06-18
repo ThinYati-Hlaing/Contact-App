@@ -39,7 +39,7 @@ const HomePage = () => {
                         </div>
 
                         {data?.contacts?.data?.length > 0 ? (
-                            <DataTableTool data={data?.contacts?.data} />
+                            <DataTableTool apiData={data?.contacts?.data} />
                         ) : (
                             <div className=" border bg-white h-[500px] w-full mt-5 rounded flex flex-col justify-center items-center">
                                 <div className=" mx-auto">

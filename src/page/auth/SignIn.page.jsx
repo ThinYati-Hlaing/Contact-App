@@ -12,12 +12,11 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
 import { useSignInMutation } from "../../store/service/endpoints/auth.endpoint";
 import AuthGuard from "../../components/guard/Auth.Guard";
 
 const SignInPage = () => {
-
     const [fun, data] = useSignInMutation();
     const nav = useNavigate();
 
@@ -27,21 +26,25 @@ const SignInPage = () => {
     };
 
     const validationSchema = yup.object({
-        email: yup.string().required("Email Is Required")
+        email: yup
+            .string()
+            .required("Email Is Required")
             .email("Invalid Email Format"),
-        password: yup.string().required("Password Is Required").min(8, "Password should be 8 letter"),
-    })
+        password: yup
+            .string()
+            .required("Password Is Required")
+            .min(8, "Password should be 8 letter"),
+    });
 
-    const handleSubmit = async (value, action) => {
+    const handleSubmit = async (value) => {
         await fun(value);
-        // action.reset();
     };
 
     useEffect(() => {
         if (data?.data?.success) {
-            nav("/home")
+            nav("/home");
         }
-    }, [data])
+    }, [data]);
 
     return (
         <AuthGuard check={data?.data?.success} token={data?.data?.token}>
@@ -50,13 +53,17 @@ const SignInPage = () => {
                     <CardHeader className=" flex flex-row justify-between mb-5">
                         <CardTitle>Sign In</CardTitle>
                         <CardDescription className=" text-basic">
-                            <Link to="sign_up">
-                                I don't have an account
-                            </Link>
+                            <Link to="sign_up">I don't have an account</Link>
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Formik validateOnBlur={false} validateOnChange={false} validationSchema={validationSchema} initialValues={initialValue} onSubmit={handleSubmit}>
+                        <Formik
+                            validateOnBlur={false}
+                            validateOnChange={false}
+                            validationSchema={validationSchema}
+                            initialValues={initialValue}
+                            onSubmit={handleSubmit}
+                        >
                             {({ handleBlur, handleChange, values, isSubmitting }) => (
                                 <>
                                     <Form className=" flex flex-col gap-4">
@@ -69,7 +76,11 @@ const SignInPage = () => {
                                             name="email"
                                             id="email"
                                         />
-                                        <ErrorMessage className=" text-danger text-sm" component={"p"} name="email" />
+                                        <ErrorMessage
+                                            className=" text-danger text-sm"
+                                            component={"p"}
+                                            name="email"
+                                        />
                                         <Label htmlFor="password">Password</Label>
                                         <Input
                                             value={values.password}
@@ -79,8 +90,21 @@ const SignInPage = () => {
                                             name="password"
                                             id="password"
                                         />
-                                        <ErrorMessage className=" text-danger text-sm" component={"p"} name="password" />
-                                        <Button disabled={isSubmitting} type="submit" className="w-full bg-basic mt-3">Sign In {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}</Button>
+                                        <ErrorMessage
+                                            className=" text-danger text-sm"
+                                            component={"p"}
+                                            name="password"
+                                        />
+                                        <Button
+                                            disabled={isSubmitting}
+                                            type="submit"
+                                            className="w-full bg-basic mt-3"
+                                        >
+                                            Sign In{" "}
+                                            {isSubmitting && (
+                                                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                                            )}
+                                        </Button>
                                     </Form>
                                 </>
                             )}
@@ -88,7 +112,6 @@ const SignInPage = () => {
                     </CardContent>
                 </Card>
             </div>
-
         </AuthGuard>
     );
 };

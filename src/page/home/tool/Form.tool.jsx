@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as yup from "yup";
 import { Formik, Form, ErrorMessage } from 'formik';
 import { Button } from '../../../components/ui/button';
@@ -7,6 +7,8 @@ import { SheetClose } from '../../../components/ui/sheet';
 import { useCreateMutation } from '../../../store/service/endpoints/contact.endpoint';
 
 const FormTool = () => {
+
+    const CloseRef = useRef();
     const initialValue = {
         name: "",
         email: "",
@@ -34,14 +36,15 @@ const FormTool = () => {
         address: yup.string().required("address is required"),
     });
 
-    const handleSubmit = (value) => {
-        fun(value);
+    const handleSubmit = async (value) => {
+        await fun(value);
+        CloseRef.current.click();
     }
 
     useEffect(() => {
 
     }, [data, isError, isLoading]);
-    
+
     return (
         <div className=' h-full'>
             <Formik validateOnBlur={false}
@@ -80,7 +83,7 @@ const FormTool = () => {
                             </div>
 
                             <div className=' flex gap-3 mt-30'>
-                                <SheetClose className='w-full '>
+                                <SheetClose ref={CloseRef} className='w-full '>
                                     <Button variant="outline"
                                         disabled={isSubmitting} type="button" className="w-full text-basic border-basic">
                                         Cancel
@@ -88,7 +91,7 @@ const FormTool = () => {
                                 </SheetClose>
 
                                 <Button
-                                    disabled={isSubmitting} type="submit" className="w-full bg-basic border-basic" >
+                                    disabled={isSubmitting} type="submit" className="w-full bg-basic border-basic hover:bg-blue-400" >
                                     Create
                                     {isSubmitting && (
                                         <Loader2 className='ml-2 h-4 w-4 animate-spin' />

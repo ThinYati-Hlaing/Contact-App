@@ -12,5 +12,6 @@ export const ApiService = createApi({
       }
     }
   }),
+  tagTypes: ["contact"],
   endpoints: (builder) => ({}),
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../../components/ui/nav/Nav";
 import { Button } from "../../components/ui/button";
 import { FaPlus } from "react-icons/fa6";
@@ -22,7 +22,17 @@ import { useGetQuery } from "../../store/service/endpoints/contact.endpoint";
 
 const HomePage = () => {
     const { data, isLoading, isError, isSuccess } = useGetQuery();
+    const [editData, setEditData] = useState({ edit: false, data: null });
 
+    const handleEdit = (id) => {
+        const apiData = data?.contacts?.data;
+        const finder = apiData.find((i) => i.id === id);
+        setEditData({ edit: true, data: finder });
+    }
+
+    const handleClose = () => {
+        setEditData({ edit: false, data: null })
+    }
     return (
         <AuthGuard>
             <Sheet>
@@ -39,7 +49,7 @@ const HomePage = () => {
                         </div>
 
                         {data?.contacts?.data?.length > 0 ? (
-                            <DataTableTool apiData={data?.contacts?.data} />
+                            <DataTableTool handleEdit={handleEdit} apiData={data?.contacts?.data} />
                         ) : (
                             <div className=" border bg-white h-[500px] w-full mt-5 rounded flex flex-col justify-center items-center">
                                 <div className=" mx-auto">
@@ -51,13 +61,13 @@ const HomePage = () => {
                             </div>
                         )}
                     </div>
-                    <SheetContent>
+                    <SheetContent onClose={handleClose} onOverlayClick={handleClose}>
                         <SheetHeader>
                             <SheetTitle className=" tracking-wide text-xl font-bold">
                                 Contact Information
                             </SheetTitle>
                         </SheetHeader>
-                        <FormTool />
+                        <FormTool editData={editData} handleClose={handleClose} />
                         {/* <SheetFooter>
                             <SheetClose asChild>
                                 <Button type="submit">Save Changes</Button>

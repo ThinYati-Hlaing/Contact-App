@@ -3,7 +3,7 @@ import { useProfileQuery } from "../../store/service/endpoints/auth.endpoint";
 import Loading from "../loading/Loading";
 import { useNavigate } from "react-router-dom";
 
-const AuthGuard = ({ check, token, children }) => {
+const AuthGuard = ({ check, token, children,path="/" }) => {
     const nav = useNavigate();
     const { data, isError, isLoading } = useProfileQuery();
 
@@ -11,7 +11,7 @@ const AuthGuard = ({ check, token, children }) => {
         if (check) {
             localStorage.setItem("token", JSON.stringify(token));
         } else if (isError) {
-            nav("/");
+            nav(path);
         } else if (data) {
             nav("/home")
         }

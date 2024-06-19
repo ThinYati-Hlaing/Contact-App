@@ -12,12 +12,12 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import SweetAlert2 from 'react-sweetalert2';
 import "sweetalert2/dist/sweetalert2.css";
 import { useDeleteMutation } from "../../../store/service/endpoints/contact.endpoint"
-
-const DataTableTool = ({ apiData }) => {
+import { SheetTrigger } from '../../../components/ui/sheet';
+const DataTableTool = ({ apiData, handleEdit }) => {
     const [swalProps, setSwalProps] = useState({});
     const [deleteFun, { data, isLoading, isError }] = useDeleteMutation();
 
-    useEffect(() => {},[data,isLoading,isError
+    useEffect(() => { }, [data, isLoading, isError
 
     ])
 
@@ -67,10 +67,12 @@ const DataTableTool = ({ apiData }) => {
                             <TableCell className=" text-gray-400">{i.phone}</TableCell>
                             <TableCell className=" text-gray-400 w-[300px] text-wrap">{i.address}</TableCell>
                             <TableCell className=" text-xl space-x-5">
-                                <button>
-                                    <MdOutlineModeEdit />
-                                </button>
-                                <button onClick={handleDelete.bind(null,i.id)}>
+                                <SheetTrigger>
+                                    <button onClick={handleEdit.bind(null, i.id)}>
+                                        <MdOutlineModeEdit />
+                                    </button>
+                                </SheetTrigger>
+                                <button onClick={handleDelete.bind(null, i.id)}>
                                     <FaRegTrashAlt className=' text-danger' />
                                 </button>
                             </TableCell>

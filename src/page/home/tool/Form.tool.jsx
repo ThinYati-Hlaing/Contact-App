@@ -4,19 +4,20 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import { Button } from '../../../components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { SheetClose } from '../../../components/ui/sheet';
-import { useCreateMutation } from '../../../store/service/endpoints/contact.endpoint';
+import { useCreateMutation, useUpdateMutation } from '../../../store/service/endpoints/contact.endpoint';
 
-const FormTool = () => {
+const FormTool = ({ editData, handleClose }) => {
 
     const CloseRef = useRef();
     const initialValue = {
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
+        name: editData.data?.name || "",
+        email: editData.data?.email || "",
+        phone: editData.data?.phone || "",
+        address: editData.data?.address || "",
     }
 
     const [fun, { data, isError, isLoading }] = useCreateMutation();
+    const [updateFun, { apiData }] = useUpdateMutation();
 
 
     const validationSchema = yup.object({
@@ -37,7 +38,12 @@ const FormTool = () => {
     });
 
     const handleSubmit = async (value) => {
-        await fun(value);
+        if (editData.edit) {
+            await updateFun({ id:editData.data?.id, ...value })
+        } else {
+            await fun(value);
+
+        }
         CloseRef.current.click();
     }
 
@@ -84,7 +90,7 @@ const FormTool = () => {
 
                             <div className=' flex gap-3 mt-30'>
                                 <SheetClose ref={CloseRef} className='w-full '>
-                                    <Button variant="outline"
+                                    <Button variant="outline" onClick={handleClose}
                                         disabled={isSubmitting} type="button" className="w-full text-basic border-basic">
                                         Cancel
                                     </Button>

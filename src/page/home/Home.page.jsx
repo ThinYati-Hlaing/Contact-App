@@ -55,7 +55,7 @@ const HomePage = () => {
                                 <div className=" mx-auto">
                                     <EmptyLottie />
                                 </div>
-                                <p className=" items-center text-lg text-gray-400 font-semibold tracking-wide">
+                                <p className=" items-center text-lg text-gray-500 font-semibold tracking-widest">
                                     There is no List...
                                 </p>
                             </div>

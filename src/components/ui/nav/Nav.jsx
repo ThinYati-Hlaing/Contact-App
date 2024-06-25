@@ -9,8 +9,8 @@ const Nav = () => {
     const [logoutFun] = useLogoutMutation();
 
     const handleLogout = async (value) => {
-        await logoutFun(value);
         localStorage.removeItem("token");
+        await logoutFun(value);
         nav("/");
         toast.success("Logout Successfully");
     };
@@ -22,7 +22,7 @@ const Nav = () => {
                 <div className=' flex justify-center items-center gap-5'>
                     <button onClick={handleLogout} className=' font-semibold text-lg text-gray-500'>Logout</button>
                     <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage src="/images/profile1.jpg" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 </div>

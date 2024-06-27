@@ -36,8 +36,9 @@ const SignInPage = () => {
             .min(8, "Password should be 8 letter"),
     });
 
-    const handleSubmit = async (value) => {
+    const handleSubmit = async (value, action) => {
         await fun(value);
+        action.reset();
     };
 
     useEffect(() => {

@@ -14,7 +14,6 @@ const App = () => {
           <Route path='/sign_up' element={<SignUp />} />
           <Route path='/home' element={<Home />} />
         </Routes>
-
       </ToastProvider>
     </div>
   )

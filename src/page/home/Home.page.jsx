@@ -33,6 +33,7 @@ const HomePage = () => {
     const handleClose = () => {
         setEditData({ edit: false, data: null })
     }
+    
     return (
         <AuthGuard>
             <Sheet>

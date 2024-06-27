@@ -52,7 +52,7 @@ const SignInPage = () => {
                 <Card className=" lg:basis-2/4 md:basis-2/3">
                     <CardHeader className=" flex flex-row justify-between mb-5">
                         <CardTitle>Sign In</CardTitle>
-                        <CardDescription className=" text-basic">
+                        <CardDescription className=" text-basic px-5">
                             <Link to="sign_up">I don't have an account</Link>
                         </CardDescription>
                     </CardHeader>

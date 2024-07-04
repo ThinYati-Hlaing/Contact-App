@@ -66,7 +66,7 @@ const DataTableTool = ({ apiData, handleEdit }) => {
                             <TableCell className=" text-gray-400">{i.email}</TableCell>
                             <TableCell className=" text-gray-400">{i.phone}</TableCell>
                             <TableCell className=" text-gray-400 w-[300px] text-wrap">{i.address}</TableCell>
-                            <TableCell className=" text-xl space-x-5">
+                            <TableCell className="flex justify-center items-center text-xl space-x-5">
                                 <SheetTrigger>
                                     <button onClick={handleEdit.bind(null, i.id)}>
                                         <MdOutlineModeEdit />

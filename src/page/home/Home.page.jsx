@@ -37,9 +37,9 @@ const HomePage = () => {
     return (
         <AuthGuard>
             <Sheet>
-                <div className=" w-screen h-screen bg-[#FCFCFD]">
+                <div className=" w-screen h-screen bg-[#FCFCFD] px-5">
                     <Nav />
-                    <div className=" px-52 mx-auto">
+                    <div className=" lg:px-52 mx-auto">
                         <div className="flex justify-end">
                             <SheetTrigger>
                                 <Button className=" bg-basic space-x-2 mt-5 hover:bg-blue-400">

@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { Formik, Form, ErrorMessage } from 'formik';
 import { Button } from '../../../components/ui/button';
 import { Loader2 } from 'lucide-react';
+import toast from "react-hot-toast";
 import { SheetClose } from '../../../components/ui/sheet';
 import { useCreateMutation, useUpdateMutation } from '../../../store/service/endpoints/contact.endpoint';
 
@@ -39,10 +40,11 @@ const FormTool = ({ editData, handleClose }) => {
 
     const handleSubmit = async (value) => {
         if (editData.edit) {
-            await updateFun({ id:editData.data?.id, ...value })
+            await updateFun({ id: editData.data?.id, ...value });
+            toast.success("Contact edited")
         } else {
             await fun(value);
-
+            toast.success("Contact created");
         }
         CloseRef.current.click();
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Home, SignIn, SignUp } from './page'
 import { Toast, ToastProvider } from '@radix-ui/react-toast'
-
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   return (
@@ -14,6 +14,7 @@ const App = () => {
           <Route path='/sign_up' element={<SignUp />} />
           <Route path='/home' element={<Home />} />
         </Routes>
+        <Toaster position="bottom-left" reverseOrder={false} />
       </ToastProvider>
     </div>
   )

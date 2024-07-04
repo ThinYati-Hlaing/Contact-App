@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import toast from "react-hot-toast";
 import {
     Table,
     TableBody,
@@ -25,7 +26,7 @@ const DataTableTool = ({ apiData, handleEdit }) => {
         setSwalProps({
             show: true,
             title: "Are you sure?",
-            text: "You want to remove!",
+            text: "You really want to remove this!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonText: "No, cancel",
@@ -33,6 +34,7 @@ const DataTableTool = ({ apiData, handleEdit }) => {
             confirmButtonColor: "red",
             onConfirm: async () => {
                 await deleteFun(id);
+                toast.success("Contact deleted")
                 setSwalProps({
                     show: false,
                 })

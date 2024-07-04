@@ -19,6 +19,8 @@ import AuthGuard from "../../components/guard/Auth.Guard";
 import FormTool from "./tool/Form.tool";
 import DataTableTool from "./tool/DataTable.tool";
 import { useGetQuery } from "../../store/service/endpoints/contact.endpoint";
+import toast from "react-hot-toast";
+
 
 const HomePage = () => {
     const { data, isLoading, isError, isSuccess } = useGetQuery();
